@@ -1,23 +1,23 @@
 let globalStore = [];//array of objects
-const taskContainer = document.querySelector(".task_container")
+const taskContainer = document.querySelector(".task__container")
 
 const generateNewCard = (taskData) => `
-<div class="col-sm-12  col-md-6 col-lg-4 mb-5 ">
-  <div class="card border-info">
-    <div class="card-header border-info d-flex justify-content-end gap-3">
-      <button type="button" class="  btn btn-info"><i class="fas fa-pencil-alt"></i></button>
-    <button type="button" class=" btn btn-warning" onclick="deleteCard.apply(this,arguments)" id="${Date.now()}"><i class="fas fa-trash-alt"  id="${Date.now()}"></i></button>
-    </div>
-
-    <div class="card-body">
-      <img src="${taskData.imageUrl}" alt="picture" class="card-img-top">
-      <h5 class="card-title mt-1 text-primary">${taskData.taskTitle} </h5>
-      <p class="card-text">${taskData.taskType}</p>
-
-    </div>
+  <div class="col-sm-12 col-md-6 col-lg-4 mb-3">
+  <div class="card card border-info ">
+  <div class="card-header  border-info d-flex justify-content-end gap-2">
+   <button type="button" class="  btn btn-info"><i class="fas fa-pencil-alt"></i></button>
+  <button type="button" class=" btn btn-warning" id=${taskData.id} onclick="deleteCard.apply(this,arguments)"><i class="fas fa-trash-alt" id=${taskData.id} onclick="deleteCard.apply(this,arguments)"></i></button>
   </div>
-</div>
-`;
+  <div class="card-body">
+  <img class="card-img-top" src=${taskData.imageUrl} alt="...">
+   <h5 class="card-title mt-3 fw-bolder text-primary">${taskData.taskTitle}</h5>
+   <p class="card-text">${taskData.taskType}</p>
+   <a href="#" class="btn btn-primary">${taskData.taskDescription}</a>
+  </div>
+  </div>
+  </div>
+  `;
+
 
 //loadInitialCardData() function , it render html card using data in localStorage and prevent from disapper of cards
 const loadInitialCardData = () => {
@@ -38,16 +38,19 @@ const loadInitialCardData = () => {
 // Delete Card
 const deleteCard = (event) => {
     event = window.event;
-    const targetID = event.target.id;
+  const targetID = event.target.id;
     const tagname = event.target.tagName;
 
-    globalStore = globalStore.filter((cardObject) => cardObject.id !== targetID);
+  globalStore =  globalStore.filter((cardObject) =>{
+      return cardObject.id !== targetID
+    });
+
     localStorage.setItem("k", JSON.stringify({cards:globalStore} ));
 
     if (tagname === "BUTTON") {
-        return  taskContainer.removeChild(event.target.parentNode.parentNode.parentNode);
+        return  document.querySelector(".task__container").removeChild(event.target.parentNode.parentNode.parentNode);
     } else {
-        return  taskContainer.removeChild(event.target.parentNode.parentNode.parentNode.parentNode);
+        return  document.querySelector(".task__container").removeChild(event.target.parentNode.parentNode.parentNode.parentNode);
     };
 };
 
@@ -71,7 +74,7 @@ const saveChanges = () =>{
    taskContainer.insertAdjacentHTML("beforeend", generateNewCard(taskData));
   globalStore.push(taskData);
 
-  // localStorage.setItem("my_taskify", globalStore); - Stores data in Object -> Object format which is not supported
+
   localStorage.setItem("k", JSON.stringify({cards:globalStore} )); // Stores data in Key - Value pairs
 
 };
