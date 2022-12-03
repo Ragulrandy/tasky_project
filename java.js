@@ -78,3 +78,5 @@ const saveChanges = () =>{
   localStorage.setItem("k", JSON.stringify({cards:globalStore} )); // Stores data in Key - Value pairs
 
 };
+
+//command
