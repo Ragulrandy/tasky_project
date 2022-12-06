@@ -85,3 +85,14 @@ const saveChanges = () =>{
 //wow
 //he
 //g
+// 0
+
+
+// In my experience this "spillover" problem arises because git does not protect "untracked" files from git checkout (only tracked but uncommitted files would be protected, i.e. user would be forced to git commit them before a git checkout is allowed to another branch).
+
+// If you switch back to the original branch that created these files (and "untracks" them), these files become "untracked" again and can be git add'ed or git rm'ed.
+
+// For me it looks like a bug: even "untracked" files should be protected from git checkout.
+
+// Share
+// Follow
